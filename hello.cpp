@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
+#include <stdio.h>
 
 /// Controla o comportamento da aplicacao quando uma tecla eh pressionada
 /// ou solta
@@ -21,13 +21,13 @@ int main(int argc, char const *argv[]) {
   // Cria janela
   GLFWwindow *window = glfwCreateWindow(800, 600, "CG 2019", NULL, NULL);
   if (window == NULL) {
-    std::cout << "Failed to create GLFW window\n";
+    printf("Failed to create GLFW window\n");
     glfwTerminate();
     return -1;
   }
   glfwMakeContextCurrent(window);
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    std::cout << "Failed to initialize GLAD\n";
+    printf("Failed to initialize GLAD\n");
     return -2;
   }
   glViewport(0, 0, 800, 600);
