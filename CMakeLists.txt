@@ -9,13 +9,25 @@ include( glfw )
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/external/glad" "external/glad")
 set(GLAD_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include")
 
-# add_subdirectory(src)
+set(CG2019ICMC_CPP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cpp_src)
+add_subdirectory(cpp_src)
+
+# set(CG2019ICMC_C_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/c_src)
+# add_subdirectory(c_src)
 
 ##################################################################
-# EXECUTAVEL
-add_executable( hello hello.cpp )
-target_link_libraries( hello glad ${GLFW_LIBRARIES})
-target_include_directories( hello PUBLIC 
-                            ${GLFW_INCLUDE_DIR} 
-                            ${CMAKE_CURRENT_SOURCE_DIR}/glad/include )
-add_dependencies( hello glfw glad )
+# EXECUTAVEIS
+
+# Versao procedural
+add_executable( test1 hello.cpp )
+target_link_libraries( test1 glad ${GLFW_LIBRARIES})
+target_include_directories( test1 PUBLIC 
+                            ${CG2019ICMC_C_INCLUDE_DIR}
+                            ${GLFW_INCLUDE_DIR} ${GLAD_INCLUDES} )
+
+# Versao orientado a objetos
+add_executable( test2 hello_oo.cpp )
+target_link_libraries( test2 glad ${GLFW_LIBRARIES} cg2019cpp )
+target_include_directories( test2 PUBLIC 
+                            ${CG2019ICMC_CPP_INCLUDE_DIR}
+                            ${GLFW_INCLUDE_DIR} ${GLAD_INCLUDES} )
