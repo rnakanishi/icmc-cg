@@ -23,10 +23,10 @@ public:
 
   ///
   /// Run the application in a loop.
-  void run();
+  virtual void run();
 
 protected:
-  void processInput(GLFWwindow *window);
+  virtual void processInput();
 
   int _viewPortSize;
   GLFWwindow *_window;

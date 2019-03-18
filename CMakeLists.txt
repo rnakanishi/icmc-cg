@@ -31,3 +31,9 @@ target_link_libraries( projeto1CPP glad ${GLFW_LIBRARIES} cg2019cpp )
 target_include_directories( projeto1CPP PUBLIC 
                             ${CG2019ICMC_CPP_INCLUDE_DIR}
                             ${GLFW_INCLUDE_DIR} ${GLAD_INCLUDES} )
+
+add_executable( demo demo.cpp )
+target_link_libraries( demo glad ${GLFW_LIBRARIES} cg2019cpp )
+target_include_directories( demo PUBLIC 
+                            ${CG2019ICMC_CPP_INCLUDE_DIR}
+                            ${GLFW_INCLUDE_DIR} ${GLAD_INCLUDES} )
