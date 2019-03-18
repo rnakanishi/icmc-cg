@@ -1,7 +1,7 @@
-#include <cg_window.h>
+#include <cg_window.hpp>
 
 int main(int argc, char const *argv[]) {
-  cg2019::Window window;
+  cgicmc::Window window;
   window.createWindow();
   window.run();
 }

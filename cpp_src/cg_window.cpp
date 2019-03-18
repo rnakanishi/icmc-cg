@@ -1,6 +1,6 @@
-#include <cg_window.h>
+#include <cg_window.hpp>
 
-namespace cg2019 {
+namespace cgicmc {
 
 Window::Window() {
   glfwInit();

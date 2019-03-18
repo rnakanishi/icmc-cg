@@ -1,39 +1,41 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <cg_window.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-/// Controla o comportamento da aplicacao quando uma tecla eh pressionada
-/// ou solta
-/// \param window
 void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    glfwSetWindowShouldClose(window, true);
+    glfwSetWindowShouldClose(window, 1);
 }
 
-int main(int argc, char const *argv[]) {
+void initializeGLFW() {
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   // Se estiver em ambiente MAC, descomente a seguinte linha:
   // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+}
 
+GLFWwindow *createWindow(int width, int height) {
   // Cria janela
-  GLFWwindow *window = glfwCreateWindow(800, 600, "CG 2019", NULL, NULL);
+  GLFWwindow *window = glfwCreateWindow(width, height, "CG 2019", NULL, NULL);
   if (window == NULL) {
     printf("Failed to create GLFW window\n");
     glfwTerminate();
-    return -1;
+    exit(-1);
   }
   glfwMakeContextCurrent(window);
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     printf("Failed to initialize GLAD\n");
-    return -2;
+    exit(-2);
   }
-  glViewport(0, 0, 800, 600);
 
+  glViewport(0, 0, width, height);
+  return window;
+}
+
+void run(GLFWwindow *window) {
   while (!glfwWindowShouldClose(window)) {
-
     // Comandos de entrada
     processInput(window);
 
@@ -46,8 +48,4 @@ int main(int argc, char const *argv[]) {
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
-
-  // Encerra aplicacao
-  glfwTerminate();
-  return 0;
 }

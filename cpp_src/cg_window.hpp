@@ -1,8 +1,11 @@
+#ifndef __CG_WINDOW_HPP__
+#define __CG_WINDOW_HPP__
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-namespace cg2019 {
+namespace cgicmc {
 
 class Window {
 public:
@@ -28,4 +31,6 @@ protected:
   int _viewPortSize;
   GLFWwindow *_window;
 };
-}
+} // namespace cgicmc
+
+#endif

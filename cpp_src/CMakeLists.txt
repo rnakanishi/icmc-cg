@@ -1,5 +1,5 @@
 file(GLOB HEADERS 
-        ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
         )
 file(GLOB SOURCES 
         ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
