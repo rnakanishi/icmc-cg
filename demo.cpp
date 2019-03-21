@@ -1,5 +1,8 @@
 #include <cg_window.hpp>
 #include <vector>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class Demo : public cgicmc::Window {
 public:
@@ -12,14 +15,23 @@ public:
       processInput();
 
       // Comandos de renderizacao vao aqui
-      glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+      glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
       glClear(GL_COLOR_BUFFER_BIT);
       // etc...
 
+      glm::mat4 transform = glm::mat4(1.0f);
+      // transform = glm::translate(transform, glm::vec3(0.5f, 0.286f, 0.0f));
+      transform = glm::rotate(transform, (float)glfwGetTime(),
+                              glm::vec3(0.0f, 0.0f, 1.0f));
+      transform = glm::translate(transform, glm::vec3(-0.5f, -0.286f, 0.0f));
+
       glUseProgram(_shaderProgram);
+      unsigned int transformLoc =
+          glGetUniformLocation(_shaderProgram, "transform");
+      glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
       glBindVertexArray(_VAO);
       glDrawArrays(GL_TRIANGLES, 0, 3);
-
       // Controla eventos e troca os buffers para renderizacao
       glfwSwapBuffers(_window);
       glfwPollEvents();
@@ -27,7 +39,7 @@ public:
   }
 
   void prepare() {
-    float array[] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.36f, 0.0f};
+    float array[] = {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5, 0.86f, 0.0f};
     _vertices.insert(_vertices.begin(), array, array + 9);
 
     glGenVertexArrays(1, &_VAO);
@@ -37,7 +49,7 @@ public:
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * _vertices.size(),
                  _vertices.data(), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 3 * sizeof(float),
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
                           (void *)0);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -46,10 +58,10 @@ public:
 
   unsigned int loadVertexShader() {
     _vertexShader = "#version 330 core\n"
-                    "layout (location = 0) in vec3 aPos;\n"
-                    "void main()\n"
-                    "{\n"
-                    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                    "layout(location = 0) in vec3 aPos;\n"
+                    "uniform mat4 transform;\n"
+                    "void main() {\n"
+                    "gl_Position = transform * vec4(aPos, 1.0f);\n"
                     "}\0";
 
     unsigned int vertexShaderId;
@@ -72,7 +84,7 @@ public:
                                "out vec4 FragColor;\n"
                                "void main()\n"
                                "{\n"
-                               "   FragColor = vec4(0.8f, 0.5f, 0.2f, 1.0f);\n"
+                               "   FragColor = vec4(0.6f, 0.8f, 0.8f, 1.0f);\n"
                                "}\n\0";
     unsigned int fragmentShaderId;
     fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);

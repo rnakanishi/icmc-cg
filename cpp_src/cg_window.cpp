@@ -11,8 +11,12 @@ Window::Window() {
 
 Window::~Window() { glfwTerminate(); }
 
+void Window::framebufferCallback(GLFWwindow *window, int width, int height) {
+  glViewport(0, 0, width, height);
+}
+
 void Window::createWindow() {
-  _window = glfwCreateWindow(800, 800, "CG 2019", NULL, NULL);
+  _window = glfwCreateWindow(500, 500, "CG 2019", NULL, NULL);
   if (_window == NULL) {
     std::cout << "Failed to create GLFW window\n";
     glfwTerminate();
@@ -23,7 +27,8 @@ void Window::createWindow() {
     std::cout << "Failed to initialize GLAD\n";
     exit(-2);
   }
-  glViewport(0, 0, 800, 800);
+
+  glfwSetFramebufferSizeCallback(_window, this->framebufferCallback);
 }
 
 void Window::processInput() {
@@ -47,4 +52,4 @@ void Window::run() {
     glfwPollEvents();
   }
 }
-}
+} // namespace cgicmc

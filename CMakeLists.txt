@@ -5,6 +5,11 @@ cmake_minimum_required(VERSION 3.11)
 include(ExternalProject)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/external")
 include( glfw )
+include( glm )
+
+find_package(OpenGL REQUIRED)
+set(OPENGL_INCLUDE_DIR ${OPENGL_INCLUDE_DIR} CACHE STRING "")
+set(OPENGL_LIBRARIES ${OPENGL_LIBRARIES} CACHE STRING "")
 
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/external/glad" "external/glad")
 set(GLAD_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include")

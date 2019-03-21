@@ -25,6 +25,8 @@ public:
   /// Run the application in a loop.
   virtual void run();
 
+  static void framebufferCallback(GLFWwindow *window, int width, int height);
+
 protected:
   virtual void processInput();
 
