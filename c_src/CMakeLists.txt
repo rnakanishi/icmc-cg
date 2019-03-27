@@ -8,6 +8,7 @@ file(GLOB SOURCES
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_library(cg2019c STATIC ${SOURCES} ${HEADERS})
 add_dependencies(cg2019c glfw)
+add_dependencies(cg2019c glm)
 target_link_libraries(cg2019c PUBLIC ${GLFW_LIBRARIES} glad)
 set_target_properties(cg2019c PROPERTIES
         OUTPUT_NAME "cg2019c"

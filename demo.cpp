@@ -23,11 +23,11 @@ public:
       // transform = glm::translate(transform, glm::vec3(0.5f, 0.286f, 0.0f));
       transform = glm::rotate(transform, (float)glfwGetTime(),
                               glm::vec3(0.0f, 0.0f, 1.0f));
-      transform = glm::translate(transform, glm::vec3(-0.5f, -0.286f, 0.0f));
+      // transform = glm::translate(transform, glm::vec3(-0.5f, -0.286f, 0.0f));
 
-      glUseProgram(_shaderProgram);
+      glUseProgram(shaderProgramId);
       unsigned int transformLoc =
-          glGetUniformLocation(_shaderProgram, "transform");
+          glGetUniformLocation(shaderProgramId, "transform");
       glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
       glBindVertexArray(_VAO);
@@ -39,7 +39,8 @@ public:
   }
 
   void prepare() {
-    float array[] = {0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5, 0.86f, 0.0f};
+    float array[] = {-0.5f, -0.286f, 0.0f,   0.5f, -0.286f,
+                     0.0f,  0.0,     0.574f, 0.0f};
     _vertices.insert(_vertices.begin(), array, array + 9);
 
     glGenVertexArrays(1, &_VAO);
@@ -107,17 +108,16 @@ public:
     vshader = loadVertexShader();
     fshader = loadFragmentShader();
 
-    _shaderProgram = glCreateProgram();
-    glAttachShader(_shaderProgram, fshader);
-    glAttachShader(_shaderProgram, vshader);
-    glLinkProgram(_shaderProgram);
+    shaderProgramId = glCreateProgram();
+    glAttachShader(shaderProgramId, fshader);
+    glAttachShader(shaderProgramId, vshader);
+    glLinkProgram(shaderProgramId);
 
     int success;
-    glGetShaderiv(_shaderProgram, GL_COMPILE_STATUS, &success);
+    glGetProgramiv(shaderProgramId, GL_LINK_STATUS, &success);
     if (!success) {
       char infoLog[512];
-      glGetShaderInfoLog(_shaderProgram, 512, NULL, infoLog);
-      std::cerr << "Shaders: " << vshader << " " << fshader << std::endl;
+      glGetProgramInfoLog(shaderProgramId, 512, NULL, infoLog);
       std::cerr << "Program shader error: " << infoLog << std::endl;
     }
 
@@ -128,7 +128,7 @@ public:
 protected:
   std::vector<float> _vertices;
   const char *_vertexShader;
-  int _shaderProgram;
+  int shaderProgramId;
   unsigned int _VBO, _VAO;
 };
 
