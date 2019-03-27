@@ -11,6 +11,8 @@ Em seguida execute os comandos do _CMake_ para compilar e executar o exemplo
 
 ```
 cmake ..
-make 
-./hello
+make
 ```
+
+Os arquivos executáveis gerados (`projeto1C` e `projeto1CPP`) podem ser rodados para testar a compilação do projeto.
+Uma janela vazia, com um fundo azul escuro, deve aparecer ao executá-los.
