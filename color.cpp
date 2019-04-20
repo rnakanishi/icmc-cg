@@ -18,19 +18,10 @@ public:
       glClear(GL_COLOR_BUFFER_BIT);
       // etc...
 
-      glm::mat4 transform = glm::mat4(1.0f);
-      // transform = glm::translate(transform, glm::vec3(0.5f, 0.286f, 0.0f));
-      transform = glm::rotate(transform, (float)glfwGetTime(),
-                              glm::vec3(0.0f, 0.0f, 1.0f));
-      // transform = glm::translate(transform, glm::vec3(-0.5f, -0.286f, 0.0f));
-
       _shader.useShader();
-      unsigned int transformLoc =
-          glGetUniformLocation(_shader.getId(), "transform");
-      glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
-
       glBindVertexArray(_VAO);
       glDrawArrays(GL_TRIANGLES, 0, 3);
+
       // Controla eventos e troca os buffers para renderizacao
       glfwSwapBuffers(_window);
       glfwPollEvents();
