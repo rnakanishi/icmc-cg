@@ -42,3 +42,16 @@ target_link_libraries( demo glad ${GLFW_LIBRARIES} cg2019cpp )
 target_include_directories( demo PUBLIC 
                             ${CG2019ICMC_CPP_INCLUDE_DIR}
                             ${GLFW_INCLUDE_DIR} ${GLAD_INCLUDES} )
+
+add_executable( color color.cpp )
+target_link_libraries( color glad ${GLFW_LIBRARIES} cg2019cpp )
+target_include_directories( color PUBLIC 
+                            ${CG2019ICMC_CPP_INCLUDE_DIR}
+                            ${GLFW_INCLUDE_DIR} ${GLAD_INCLUDES} )
+
+                                                        
+add_executable( texture texture.cpp )
+target_link_libraries( texture glad ${GLFW_LIBRARIES} cg2019cpp )
+target_include_directories( texture PUBLIC 
+                            ${CG2019ICMC_CPP_INCLUDE_DIR}
+                            ${GLFW_INCLUDE_DIR} ${GLAD_INCLUDES} )
