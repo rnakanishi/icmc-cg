@@ -10,12 +10,10 @@ public:
   Shader();
   Shader(const char *vertexShaderPath, const char *fragmentShaderPath);
 
-  /**
-   * @brief Use current program shader
-   *
-   **/
+  // Configura a OpenGL para utilizar o shader
   void useShader();
 
+  // Carrega o arquivo do shader dependendo do tipo
   unsigned int loadShader(const char *shaderPath, unsigned int shaderType);
 
   void loadVertexShader(const char *geometryShaderPath);
@@ -24,6 +22,7 @@ public:
 
   void loadFragmentShader(const char *fragmentShaderPath);
 
+  // Retorna o identificador criado pela OpenGL
   unsigned int getId();
 
 protected:
