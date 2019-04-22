@@ -22,7 +22,7 @@ public:
       _shader.useShader();
       glBindTexture(GL_TEXTURE_2D, _textureBuffer);
       glBindVertexArray(_VAO);
-      glDrawArrays(GL_TRIANGLES, 0, 3);
+      glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
 
       // Controla eventos e troca os buffers para renderizacao
       glfwSwapBuffers(_window);
@@ -33,15 +33,34 @@ public:
   void loadScene() {
     _shader.loadVertexShader("./assets/shaders/texture.vert");
     _shader.loadFragmentShader("./assets/shaders/texture.frag");
+    /*
+        _vertices.emplace_back(glm::vec3(-0.75f, -0.75f, 0.0f));
+        _vertices.emplace_back(glm::vec3(0.75f, -0.75f, 0.0f));
+        _vertices.emplace_back(glm::vec3(-0.75f, 0.75f, 0.0f));
+
+        _vertices.emplace_back(glm::vec3(0.75f, -0.75f, 0.0f));
+        _vertices.emplace_back(glm::vec3(0.75f, 0.75f, 0.0f));
+        _vertices.emplace_back(glm::vec3(-0.75f, 0.75f, 0.0f)); */
+    /*
+        _vertexTexture.emplace_back(glm::vec2(-1.0f, -1.0f));
+        _vertexTexture.emplace_back(glm::vec2(2.0f, -1.0f));
+        _vertexTexture.emplace_back(glm::vec2(-1.0f, 2.0f));
+
+        _vertexTexture.emplace_back(glm::vec2(2.0f, -1.0f));
+        _vertexTexture.emplace_back(glm::vec2(2.0f, 2.0f));
+        _vertexTexture.emplace_back(glm::vec2(-1.0f, 2.0f)); */
+
+    /* _vertexTexture.emplace_back(glm::vec2(0.0f, 0.0f));
+    _vertexTexture.emplace_back(glm::vec2(1.0f, 0.0f));
+    _vertexTexture.emplace_back(glm::vec2(0.0f, 1.0f));
+
+    _vertexTexture.emplace_back(glm::vec2(1.0f, 0.0f));
+    _vertexTexture.emplace_back(glm::vec2(1.0f, 1.0f));
+    _vertexTexture.emplace_back(glm::vec2(0.0f, 1.0f)); */
 
     _vertices.emplace_back(glm::vec3(-0.5f, -0.286f, 0.0f));
     _vertices.emplace_back(glm::vec3(0.5f, -0.286f, 0.0f));
     _vertices.emplace_back(glm::vec3(0.0f, 0.574f, 0.0f));
-
-    _color.emplace_back(glm::vec3(1.0, 0.0, 0.0));
-    _color.emplace_back(glm::vec3(0.0, 1.0, 0.0));
-    _color.emplace_back(glm::vec3(0.0, 0.0, 1.0));
-
     _vertexTexture.emplace_back(glm::vec2(0.0f, 0.0f));
     _vertexTexture.emplace_back(glm::vec2(1.0f, 0.0f));
     _vertexTexture.emplace_back(glm::vec2(0.5f, 1.0f));
@@ -49,36 +68,9 @@ public:
     glGenVertexArrays(1, &_VAO);
     glGenBuffers(1, &_VBO);
     glGenBuffers(1, &_vertexVBO);
-    glGenBuffers(1, &_colorVBO);
     glGenBuffers(1, &_texCoordVBO);
 
     glBindVertexArray(_VAO);
-
-    // // Buffer das coordenadas
-    // glBufferData(GL_ARRAY_BUFFER,
-    //              vertices.size() * sizeof(Vector3d) +
-    //                  textureCoords.size() * sizeof(Vector2d),
-    //              0, GL_STATIC_DRAW);
-    // glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vector3d),
-    //                 vertices.data());
-    // glBufferSubData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vector3d),
-    //                 textureCoords.size() * sizeof(Vector2d),
-    //                 textureCoords.data());
-    // glBindBuffer(GL_ARRAY_BUFFER, _VBO);
-    // glBufferData(GL_ARRAY_BUFFER,
-    //              sizeof(glm::vec3) * (_vertices.size() + _color.size()) +
-    //                  sizeof(glm::vec2) * _vertexTexture.size(),
-    //              0, GL_STATIC_DRAW);
-    // glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(glm::vec3) * _vertices.size(),
-    //                 _vertices.data());
-    // glBufferSubData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * _vertices.size(),
-    //                 sizeof(glm::vec3) * _color.size(), _color.data());
-    // glBufferSubData(
-    //     GL_ARRAY_BUFFER, sizeof(glm::vec3) * (_vertices.size() +
-    //     _color.size()),
-    //     sizeof(glm::vec2) * _vertexTexture.size(), _vertexTexture.data());
-    // GLsizei stride = 2 * sizeof(glm::vec3) + sizeof(glm::vec2);
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void *)0);
 
     glBindBuffer(GL_ARRAY_BUFFER, _vertexVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * _vertices.size(),
@@ -86,14 +78,6 @@ public:
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3),
                           (void *)0);
     glEnableVertexAttribArray(0);
-
-    // // Buffer das cores
-    glBindBuffer(GL_ARRAY_BUFFER, _colorVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * _color.size(),
-                 _color.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3),
-                          (void *)0);
-    glEnableVertexAttribArray(1);
 
     // // Buffer das coordenadas de texture
     glBindBuffer(GL_ARRAY_BUFFER, _texCoordVBO);
@@ -109,20 +93,24 @@ public:
     glBindTexture(GL_TEXTURE_2D, _textureBuffer);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    float borderColor[] = {0.3, 0.45, 0.18, 1.0};
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                    GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     // Image de textura
     int width, height, channels;
     unsigned char *image;
     char path[] = "./assets/textures/brick.jpg";
+
+    stbi_set_flip_vertically_on_load(true);
     image = stbi_load(path, &width, &height, &channels, 0);
     if (image) {
       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
                    GL_UNSIGNED_BYTE, image);
       glGenerateMipmap(GL_TEXTURE_2D);
     }
-
     stbi_image_free(image);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
