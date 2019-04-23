@@ -1,0 +1,5 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl Lotus
+map_Kd lotus_petal_diffuse.jpg
