@@ -1,0 +1,6 @@
+object assets3d/newdog.obj 2.5 2.0 -1.75
+object assets3d/newcat.obj -1.75 1.2 -2.15
+object assets3d/dragonSimple.obj 0.0 -1.75 -3.0
+light 0.0 5.0 3.75 1.0 1.0 1.0 1.0 0.09 0.032
+light -3.75 5.5 -2.0 1.0 0.75 0.5 1.0 0.09 0.032
+camera 0.0 0.0 15.0 0.0 0.0 0.0
